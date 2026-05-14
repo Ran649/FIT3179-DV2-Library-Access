@@ -69,9 +69,9 @@
   "title":{
     "text": "Library Access Across Greater Melbourne",
     "subtitle": "Libraries per 10,000 residents by SA2 area",
-    "anchor": "start",
-    "fontSize": 22,
-    "subtitleFontSize": 13
+    "anchor": "middle",
+    "fontSize": 26,
+    "subtitleFontSize": 14
   },
   "config": {
     "background": "#f7f4ef",
