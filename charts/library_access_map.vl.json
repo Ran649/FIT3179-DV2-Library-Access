@@ -6,7 +6,7 @@
     "url": "data/raw/melbourne_sa2.json",
     "format": {
       "type": "json",
-      "property": "feature"
+      "property": "features"
     }
   },
   "transform": [{
@@ -34,7 +34,7 @@
     "tooltip": [
         {
             "field": "properties.SA2_CODE21",
-            "type": "nomial",
+            "type": "nominal",
             "title": "SA2 Area"
         },
         {
@@ -55,12 +55,12 @@
             "format": ".2f"
         },
         {
-            "field": "IRSD score",
+            "field": "IRSD_score",
             "type": "quantitative",
             "title": "IRSD Score"
         },
         {
-            "field": "IRSD decile",
+            "field": "IRSD_decile",
             "type": "ordinal",
             "title": "IRSD Decile"
         }
@@ -73,7 +73,7 @@
     "fontSize": 22,
     "subtitleFontSize": 13
   },
-  "confing": {
+  "config": {
     "background": "#f7f4ef",
     "view": {
         "stroke": null
