@@ -30,7 +30,7 @@
     {
       "mark": {
         "type": "circle",
-        "opacity": 0.75,
+        "opacity": 0.65,
         "stroke": "white",
         "strokeWidth": 0.7,
         "clip": true
@@ -41,7 +41,7 @@
           "type": "quantitative",
           "title": "IRSD Score: lower = more disadvantaged",
           "scale": {
-            "domain": [650, 1150]
+            "domain": [720, 1140]
           }
         },
         "y": {
@@ -56,7 +56,7 @@
           "field": "population",
           "type": "quantitative",
           "scale": {
-            "range": [100, 260]
+            "range": [24, 180]
           },
           "legend": null
         },
@@ -111,7 +111,7 @@
     {
       "data": {
         "values": [
-          {"IRSD_score": 700, "access_display": 0.42, "label": "Higher cultural desert risk"},
+          {"IRSD_score": 760, "access_display": 0.42, "label": "Higher cultural desert risk"},
           {"IRSD_score": 980, "access_display": 0.42, "label": "Better library access"}
         ]
       },
