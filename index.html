@@ -78,6 +78,15 @@
             </p>
         </section>
 
+        <section class="chart-card">
+            <div id="library_nodes_map"></div>
+
+             <p class="annotation">
+                This symbol map shows where library service nodes are located across Greater Melbourne.
+                Larger circles indicate SA2 areas with multiple libraries, helping reveal whether cultural infrastructure is concentrated in only a small number of local centres.
+            </p>
+            </section>
+
         <p class="source-note">
             Data sources: ABS SA2 boundaries 2021, ABS SEIFA 2021, Victoria public library locations dataset.
             Author: Ran Xiao. Created for FIT2179 Data Visualisation 2.
@@ -88,6 +97,12 @@
         vegaEmbed(
             "#library_access_map",
             "charts/library_access_map.vl.json",
+            { actions: false }
+        ).catch(console.error);
+
+        vegaEmbed(
+            "#library_nodes_map",
+            "charts/library_nodes_map.vl.json",
             { actions: false }
         ).catch(console.error);
     </script>
