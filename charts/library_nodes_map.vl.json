@@ -1,0 +1,114 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+
+  "width": 760,
+  "height": 560,
+
+  "title": {
+    "text": "Library Service Nodes Across Greater Melbourne",
+    "subtitle": "Layered proportional symbol map adapted from Vega-Lite geoshape examples",
+    "anchor": "start",
+    "fontSize": 22,
+    "subtitleFontSize": 13
+  },
+
+  "projection": {
+    "type": "mercator",
+    "center": [145.0, -37.8],
+    "scale": 21000
+  },
+
+  "layer": [
+
+    {
+      "data": {
+        "url": "data/raw/melbourne_sa2.json",
+        "format": {
+          "type": "json",
+          "property": "features"
+        }
+      },
+
+      "mark": {
+        "type": "geoshape",
+        "fill": "#e8ece8",
+        "stroke": "white",
+        "strokeWidth": 0.5
+      }
+    },
+
+    {
+      "data": {
+        "url": "data/processed/library_nodes.geojson",
+        "format": {
+          "type": "json",
+          "property": "features"
+        }
+      },
+
+      "mark": {
+        "type": "circle",
+        "opacity": 0.82,
+        "stroke": "white",
+        "strokeWidth": 1
+      },
+
+      "encoding": {
+
+        "longitude": {
+          "field": "geometry.coordinates[0]",
+          "type": "quantitative"
+        },
+
+        "latitude": {
+          "field": "geometry.coordinates[1]",
+          "type": "quantitative"
+        },
+
+        "size": {
+          "field": "properties.library_count",
+          "type": "quantitative",
+
+          "title": "Libraries in SA2",
+
+          "scale": {
+            "range": [80, 1200]
+          }
+        },
+
+        "color": {
+          "field": "properties.library_count",
+          "type": "quantitative",
+
+          "scale": {
+            "scheme": "teals"
+          },
+
+          "legend": null
+        },
+
+        "tooltip": [
+          {
+            "field": "properties.SA2_NAME21",
+            "type": "nominal",
+            "title": "SA2 Area"
+          },
+
+          {
+            "field": "properties.library_count",
+            "type": "quantitative",
+            "title": "Library Count"
+          }
+        ]
+      }
+    }
+  ],
+
+  "config": {
+    "background": "#f7f4ef",
+
+    "view": {
+      "stroke": null
+    }
+  }
+}
