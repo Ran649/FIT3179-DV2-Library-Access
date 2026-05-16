@@ -1,5 +1,5 @@
 {
-  "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "width": 760,
   "height": 560,
   "data": {
@@ -9,75 +9,93 @@
       "property": "features"
     }
   },
-  "transform": [{
-    "lookup": "properties.SA2_CODE21",
-    "from": {
-      "data": {
-        "url": "data/processed/master_sa2.csv"
-      },
-      "key": "SA2_CODE21",
-      "fields": ["population","IRSD_score","IRSD_decile","library_count","libraries_per_10000"]
+  "transform": [
+    {
+      "lookup": "properties.SA2_CODE21",
+      "from": {
+        "data": {
+          "url": "data/processed/master_sa2.csv"
+        },
+        "key": "SA2_CODE21",
+        "fields": [
+          "population",
+          "IRSD_score",
+          "IRSD_decile",
+          "library_count",
+          "libraries_per_10000"
+        ]
+      }
     }
-  }],
+  ],
   "projection": {
     "type": "identity",
     "reflectY": true
   },
-  "mark": {"type":"geoshape","stroke": "white","strokeWidth": 0.4},
+  "mark": {
+    "type": "geoshape",
+    "stroke": "white",
+    "strokeWidth": 0.6
+  },
   "encoding": {
     "color": {
       "field": "libraries_per_10000",
       "type": "quantitative",
-      "title": "libraries per 10000 residents",
-      "scale":{"scheme": "teals","reverse": true ,"domain": [0,1]}
+      "title": "Libraries per 10,000 residents",
+      "scale": {
+        "scheme": "teals",
+        "domain": [0, 1]
+      }
     },
     "tooltip": [
-        {
-            "field": "properties.SA2_CODE21",
-            "type": "nominal",
-            "title": "SA2 Area"
-        },
-        {
-            "field": "population",
-            "type": "quantitative",
-            "title": "Population",
-            "format": ","
-        },
-        {
-            "field": "library_count",
-            "type": "quantitative",
-            "title": "Library Count"
-        },
-        {
-            "field": "libraries_per_10000",
-            "type": "quantitative",
-            "title": "Libraries per 10,000 residents",
-            "format": ".2f"
-        },
-        {
-            "field": "IRSD_score",
-            "type": "quantitative",
-            "title": "IRSD Score"
-        },
-        {
-            "field": "IRSD_decile",
-            "type": "ordinal",
-            "title": "IRSD Decile"
-        }
+      {
+        "field": "properties.SA2_NAME21",
+        "type": "nominal",
+        "title": "SA2 Area"
+      },
+      {
+        "field": "population",
+        "type": "quantitative",
+        "title": "Population",
+        "format": ","
+      },
+      {
+        "field": "library_count",
+        "type": "quantitative",
+        "title": "Library Count"
+      },
+      {
+        "field": "libraries_per_10000",
+        "type": "quantitative",
+        "title": "Libraries per 10,000 residents",
+        "format": ".2f"
+      },
+      {
+        "field": "IRSD_score",
+        "type": "quantitative",
+        "title": "IRSD Score"
+      },
+      {
+        "field": "IRSD_decile",
+        "type": "ordinal",
+        "title": "IRSD Decile"
+      }
     ]
   },
-  "title":{
+  "title": {
     "text": "Library Access Across Greater Melbourne",
     "subtitle": "Libraries per 10,000 residents by SA2 area",
     "anchor": "middle",
-    "fontSize": 26,
+    "fontSize": 24,
     "subtitleFontSize": 14
   },
   "config": {
     "background": "#f7f4ef",
     "view": {
-        "stroke": null
+      "stroke": null
+    },
+    "legend": {
+      "labelFontSize": 11,
+      "titleFontSize": 12
     }
   }
 }
-
