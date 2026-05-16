@@ -1,30 +1,36 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "width": 760,
+
+  "width": 840,
   "height": 560,
+
   "title": {
     "text": "Library Service Nodes Across Greater Melbourne",
-    "subtitle": "Proportional symbol map showing where library services are concentrated",
+    "subtitle": "Proportional symbols show SA2 areas with one or more public libraries",
     "anchor": "middle",
-    "fontSize": 22,
-    "subtitleFontSize": 13
+    "fontSize": 24,
+    "subtitleFontSize": 14
   },
+
   "projection": {
-    "type": "mercator",
-    "center": [145.0, -37.85],
-    "scale": 24000
+    "type": "identity",
+    "reflectY": true
   },
+
   "layer": [
     {
       "data": {
-        "url": "data/processed/melbourne_sa2_wgs84.json",
-        "format": { "type": "json", "property": "features" }
+        "url": "data/raw/melbourne_sa2.json",
+        "format": {
+          "type": "json",
+          "property": "features"
+        }
       },
       "mark": {
         "type": "geoshape",
-        "fill": "#eef3ef",
-        "stroke": "#9fb7b3",
-        "strokeWidth": 0.55
+        "fill": "#eaf1ef",
+        "stroke": "#b8cccc",
+        "strokeWidth": 0.6
       }
     },
     {
@@ -33,35 +39,71 @@
       },
       "mark": {
         "type": "circle",
-        "opacity": 0.88,
-        "stroke": "white",
-        "strokeWidth": 1.2
+        "opacity": 0.86,
+        "stroke": "#dff4f4",
+        "strokeWidth": 1.1
       },
       "encoding": {
-        "longitude": { "field": "x", "type": "quantitative" },
-        "latitude": { "field": "y", "type": "quantitative" },
+        "longitude": {
+          "field": "x",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "y",
+          "type": "quantitative"
+        },
         "size": {
           "field": "library_count",
           "type": "quantitative",
           "title": "Libraries in SA2",
-          "scale": { "range": [90, 950] }
+          "scale": {
+            "range": [28, 260]
+          },
+          "legend": {
+            "orient": "right",
+            "title": "Libraries in SA2"
+          }
         },
         "color": {
           "field": "library_count",
           "type": "quantitative",
-          "scale": { "scheme": "teals" },
-          "legend": null
+          "title": "Libraries in SA2",
+          "scale": {
+            "range": [
+              "#58b8b8",
+              "#008b8b",
+              "#005f5f"
+            ]
+          },
+          "legend": {
+            "orient": "right",
+            "title": "Libraries in SA2"
+          }
         },
         "tooltip": [
-          { "field": "SA2_NAME21", "type": "nominal", "title": "SA2 Area" },
-          { "field": "library_count", "type": "quantitative", "title": "Library Count" }
+          {
+            "field": "SA2_NAME21",
+            "type": "nominal",
+            "title": "SA2 Area"
+          },
+          {
+            "field": "library_count",
+            "type": "quantitative",
+            "title": "Library Count"
+          }
         ]
       }
     }
   ],
+
   "config": {
     "background": "#f7f4ef",
-    "view": { "stroke": null },
-    "legend": { "labelFontSize": 11, "titleFontSize": 12 }
+    "view": {
+      "stroke": null
+    },
+    "legend": {
+      "labelFontSize": 11,
+      "titleFontSize": 12
+    }
   }
 }
