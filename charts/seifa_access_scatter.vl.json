@@ -1,23 +1,20 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "width": 880,
+  "width": 830,
   "height": 560,
-
   "title": {
     "text": "Socioeconomic Disadvantage and Library Access",
-    "subtitle": "Access values are square-root scaled to reveal low-access SA2 patterns",
+    "subtitle": "Each circle is an SA2 area; lower IRSD and lower access indicate higher cultural desert risk",
     "anchor": "middle",
-    "fontSize": 26,
+    "fontSize": 24,
     "subtitleFontSize": 14
   },
-
   "data": {
     "url": "data/processed/master_sa2.csv"
   },
-
   "transform": [
     {
-      "calculate": "pow(toNumber(datum.libraries_per_10000) + 0.01, 0.5)",
+      "calculate": "sqrt(toNumber(datum.libraries_per_10000) + 0.01)",
       "as": "access_display"
     },
     {
@@ -25,12 +22,11 @@
       "as": "risk_group"
     }
   ],
-
   "layer": [
     {
       "mark": {
         "type": "circle",
-        "opacity": 0.65,
+        "opacity": 0.68,
         "stroke": "white",
         "strokeWidth": 0.7,
         "clip": true
@@ -41,13 +37,13 @@
           "type": "quantitative",
           "title": "IRSD Score: lower = more disadvantaged",
           "scale": {
-            "domain": [720, 1140]
+            "domain": [700, 1140]
           }
         },
         "y": {
           "field": "access_display",
           "type": "quantitative",
-          "title": "Library access intensity (sqrt scaled)",
+          "title": "Library access intensity, scaled for visibility",
           "scale": {
             "domain": [0, 1]
           }
@@ -55,10 +51,10 @@
         "size": {
           "field": "population",
           "type": "quantitative",
+          "title": "Population",
           "scale": {
-            "range": [24, 180]
-          },
-          "legend": null
+            "range": [20, 220]
+          }
         },
         "color": {
           "field": "risk_group",
@@ -85,47 +81,144 @@
           }
         },
         "tooltip": [
-          {"field": "SA2_NAME21", "type": "nominal", "title": "SA2 Area"},
-          {"field": "population", "type": "quantitative", "title": "Population", "format": ","},
-          {"field": "IRSD_score", "type": "quantitative", "title": "IRSD Score"},
-          {"field": "IRSD_decile", "type": "ordinal", "title": "IRSD Decile"},
-          {"field": "library_count", "type": "quantitative", "title": "Library Count"},
-          {"field": "libraries_per_10000", "type": "quantitative", "title": "Libraries per 10,000 residents", "format": ".2f"},
-          {"field": "risk_group", "type": "nominal", "title": "Risk Group"}
+          {
+            "field": "SA2_NAME21",
+            "type": "nominal",
+            "title": "SA2 Area"
+          },
+          {
+            "field": "population",
+            "type": "quantitative",
+            "title": "Population",
+            "format": ","
+          },
+          {
+            "field": "IRSD_score",
+            "type": "quantitative",
+            "title": "IRSD Score"
+          },
+          {
+            "field": "IRSD_decile",
+            "type": "ordinal",
+            "title": "IRSD Decile"
+          },
+          {
+            "field": "library_count",
+            "type": "quantitative",
+            "title": "Library Count"
+          },
+          {
+            "field": "libraries_per_10000",
+            "type": "quantitative",
+            "title": "Libraries per 10,000 residents",
+            "format": ".2f"
+          },
+          {
+            "field": "risk_group",
+            "type": "nominal",
+            "title": "Risk Group"
+          }
         ]
       }
     },
-
-    {
-      "data": {"values": [{"x": 900}]},
-      "mark": {"type": "rule", "strokeDash": [5, 5], "stroke": "#777", "opacity": 0.7},
-      "encoding": {"x": {"field": "x", "type": "quantitative"}}
-    },
-
-    {
-      "data": {"values": [{"y": 0.33}]},
-      "mark": {"type": "rule", "strokeDash": [5, 5], "stroke": "#777", "opacity": 0.7},
-      "encoding": {"y": {"field": "y", "type": "quantitative"}}
-    },
-
     {
       "data": {
         "values": [
-          {"IRSD_score": 760, "access_display": 0.42, "label": "Higher cultural desert risk"},
-          {"IRSD_score": 980, "access_display": 0.42, "label": "Better library access"}
+          {
+            "x": 900
+          }
         ]
       },
-      "mark": {"type": "text", "align": "left", "fontSize": 13, "fontWeight": "bold", "color": "#333"},
+      "mark": {
+        "type": "rule",
+        "strokeDash": [5, 5],
+        "stroke": "#777",
+        "opacity": 0.75
+      },
       "encoding": {
-        "x": {"field": "IRSD_score", "type": "quantitative"},
-        "y": {"field": "access_display", "type": "quantitative"},
-        "text": {"field": "label"}
+        "x": {
+          "field": "x",
+          "type": "quantitative"
+        }
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "y": 0.33
+          }
+        ]
+      },
+      "mark": {
+        "type": "rule",
+        "strokeDash": [5, 5],
+        "stroke": "#777",
+        "opacity": 0.75
+      },
+      "encoding": {
+        "y": {
+          "field": "y",
+          "type": "quantitative"
+        }
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "IRSD_score": 705,
+            "access_display": 0.42,
+            "label": "Cultural desert risk: disadvantage + weak library access"
+          },
+          {
+            "IRSD_score": 983,
+            "access_display": 0.42,
+            "label": "Better served SA2s"
+          },
+          {
+            "IRSD_score": 840,
+            "access_display": 0.13,
+            "label": "Low-access disadvantaged areas cluster here"
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "fontSize": 13,
+        "fontWeight": "bold",
+        "color": "#333",
+        "dx": 6
+      },
+      "encoding": {
+        "x": {
+          "field": "IRSD_score",
+          "type": "quantitative"
+        },
+        "y": {
+          "field": "access_display",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "label"
+        }
       }
     }
   ],
-
   "config": {
     "background": "#f7f4ef",
-    "view": {"stroke": null}
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelFontSize": 11,
+      "titleFontSize": 12,
+      "gridColor": "#ddd8cf"
+    },
+    "legend": {
+      "labelFontSize": 11,
+      "titleFontSize": 12
+    }
   }
 }
