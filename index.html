@@ -25,7 +25,8 @@
     h1 {
       font-size: 42px;
       line-height: 1.1;
-      margin-bottom: 12px;
+      margin-bottom: 18px;
+      text-align:center;
     }
 
     .subtitle {
@@ -33,7 +34,8 @@
       line-height: 1.6;
       max-width: 850px;
       color: #444;
-      margin-bottom: 36px;
+      margin: 0 auto 48px auto;
+      text-align: left;
     }
 
     .chart-card {
@@ -64,6 +66,24 @@
       color: #666;
       line-height: 1.5;
     }
+
+    .chart-heading {
+      text-align: center;
+      margin-bottom: 8px;
+    }
+
+    .chart-heading h2 {
+      font-size: 26px;
+      line-height: 1.15;
+      margin: 0;
+      font-weight: 800;
+    }
+
+    .chart-heading p {
+      font-size: 14px;
+      margin: 4px 0 0 0;
+      color: #333;
+    }
   </style>
 </head>
 
@@ -73,9 +93,16 @@
 
     <p class="subtitle">
       This project explores public library accessibility across Greater Melbourne.
-      The first visualisation adapts the official Vega-Lite choropleth map example:
-      instead of US county unemployment, it maps libraries per 10,000 residents across SA2 areas.
-    </p>
+      Public libraries are important cultural and learning spaces, but access to them is not evenly distributed.
+      This visualisation investigates which Greater Melbourne communities have nearby library services, which areas rely more heavily on transport, and where low access overlaps with socioeconomic disadvantage.
+
+    <section class="chart-card">
+      <div id="library_nodes_map"></div>
+      <p class="annotation">
+        This symbol map shows where library service nodes are located across Greater Melbourne.
+        Larger circles indicate SA2 areas with multiple libraries, helping reveal whether cultural infrastructure is concentrated in only a small number of local centres.
+      </p>
+    </section>
 
     <section class="chart-card">
         <div id="library_access_map"></div>
@@ -83,15 +110,6 @@
       <p class="annotation">
         Most outer SA2 areas appear in the lowest access range, while higher library access is concentrated in selected inner and established suburban areas.
         This map provides the baseline for the later cultural desert analysis, where library access will be compared with socioeconomic disadvantage.
-      </p>
-    </section>
-
-    <section class="chart-card">
-      <div id="library_nodes_map"></div>
-
-      <p class="annotation">
-        This symbol map shows where library service nodes are located across Greater Melbourne.
-        Larger circles indicate SA2 areas with multiple libraries, helping reveal whether cultural infrastructure is concentrated in only a small number of local centres.
       </p>
     </section>
 
@@ -111,10 +129,9 @@
   </main>
 
   <script>
-    vegaEmbed("#library_access_map", "charts/library_access_map.vl.json", { actions: false }).catch(console.error);
     vegaEmbed("#library_nodes_map", "charts/library_nodes_map.vl.json", { actions: false }).catch(console.error);
+    vegaEmbed("#library_access_map", "charts/library_access_map.vl.json", { actions: false }).catch(console.error); 
     vegaEmbed("#seifa_access_scatter", "charts/seifa_access_scatter.vl.json", { actions: false }).catch(console.error);
   </script>
-</script>
 </body>
 </html>
