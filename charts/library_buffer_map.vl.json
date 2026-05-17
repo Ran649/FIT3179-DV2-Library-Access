@@ -1,0 +1,104 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 820,
+  "height": 620,
+  "title": {
+    "text": "Who Lives Outside Melbourne’s 15-Minute Library Zone?",
+    "subtitle": "1km walking buffers approximate areas with nearby library access",
+    "anchor": "middle",
+    "fontSize": 26,
+    "subtitleFontSize": 14
+  },
+  "projection": {
+    "type": "mercator",
+    "center": [145.0, -37.85],
+    "scale": 24000
+  },
+  "layer": [
+    {
+      "data": {
+        "url": "data/processed/melbourne_sa2_wgs84.json",
+        "format": {
+          "type": "json",
+          "property": "features"
+        }
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": "#eef2ef",
+        "stroke": "#b7c5c0",
+        "strokeWidth": 0.5
+      }
+    },
+    {
+      "data": {
+        "url": "data/processed/library_buffers.geojson",
+        "format": {
+          "type": "geojson"
+        }
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": "#5ba89b",
+        "fillOpacity": 0.18,
+        "stroke": "#5ba89b",
+        "strokeOpacity": 0.35,
+        "strokeWidth": 1
+      }
+    },
+    {
+      "data": {
+        "url": "data/processed/library_nodes.csv"
+      },
+      "mark": {
+        "type": "circle",
+        "opacity": 0.95,
+        "stroke": "white",
+        "strokeWidth": 1
+      },
+      "encoding": {
+        "longitude": {
+          "field": "x",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "y",
+          "type": "quantitative"
+        },
+        "size": {
+          "field": "library_count",
+          "type": "quantitative",
+          "title": "Libraries in SA2",
+          "scale": {
+            "range": [40, 500]
+          }
+        },
+        "color": {
+          "value": "#0b7a75"
+        },
+        "tooltip": [
+          {
+            "field": "SA2_NAME21",
+            "type": "nominal",
+            "title": "SA2 Area"
+          },
+          {
+            "field": "library_count",
+            "type": "quantitative",
+            "title": "Library Count"
+          }
+        ]
+      }
+    }
+  ],
+  "config": {
+    "background": "#f7f4ef",
+    "view": {
+      "stroke": null
+    },
+    "legend": {
+      "labelFontSize": 11,
+      "titleFontSize": 12
+    }
+  }
+}
