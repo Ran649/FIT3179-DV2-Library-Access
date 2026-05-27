@@ -28,9 +28,9 @@
       },
       "mark": {
         "type": "geoshape",
-        "fill": "#eaf1ef",
-        "stroke": "#b8cccc",
-        "strokeWidth": 0.6
+        "fill": "#e2ebe8",
+        "stroke": "#adc4c0",
+        "strokeWidth": 0.8
       }
     },
     {
@@ -70,9 +70,9 @@
           "title": "Libraries in SA2",
           "scale": {
             "range": [
-              "#58b8b8",
-              "#008b8b",
-              "#005f5f"
+              "#7ec8c8",
+              "#2a8fa0",
+              "#0f4f6e"
             ]
           },
           "legend": {
@@ -98,6 +98,7 @@
 
   "config": {
     "background": "#f7f4ef",
+    "padding": 0,
     "view": {
       "stroke": null
     },

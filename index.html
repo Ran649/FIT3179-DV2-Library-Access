@@ -44,14 +44,34 @@
       padding: 24px;
       box-shadow: 0 8px 24px rgba(0,0,0,0.08);
       margin-bottom: 32px;
-
       display: flex;
       flex-direction: column;
       align-items: center;
     }
 
+    .map-wrapper {
+      overflow: hidden;
+      cursor: grab;
+      border-radius: 8px;
+      position: relative;
+    }
+
+    .map-wrapper:active {
+      cursor: grabbing;
+    }
+
+    .map-hint {
+      font-size: 12px;
+      color: #999;
+      margin-top: 6px;
+      text-align: center;
+      letter-spacing: 0.03em;
+    }
+
     .annotation {
+      width: 100%;
       max-width: 850px;
+      box-sizing: border-box;
       font-size: 15px;
       line-height: 1.6;
       color: #333;
@@ -60,29 +80,16 @@
       margin-top: 20px;
     }
 
+    .annotation strong {
+      color: #6b2c10;
+      font-weight: 700;
+    }
+
     .source-note {
       margin-top: 32px;
       font-size: 12px;
       color: #666;
       line-height: 1.5;
-    }
-
-    .chart-heading {
-      text-align: center;
-      margin-bottom: 8px;
-    }
-
-    .chart-heading h2 {
-      font-size: 26px;
-      line-height: 1.15;
-      margin: 0;
-      font-weight: 800;
-    }
-
-    .chart-heading p {
-      font-size: 14px;
-      margin: 4px 0 0 0;
-      color: #333;
     }
   </style>
 </head>
@@ -95,31 +102,33 @@
       This project explores public library accessibility across Greater Melbourne.
       Public libraries are important cultural and learning spaces, but access to them is not evenly distributed.
       This visualisation investigates which Greater Melbourne communities have nearby library services, which areas rely more heavily on transport, and where low access overlaps with socioeconomic disadvantage.
+    </p>
 
     <section class="chart-card">
-      <div id="library_nodes_map"></div>
-      <p class="annotation">
-        This symbol map shows where library service nodes are located across Greater Melbourne.
-        Larger circles indicate SA2 areas with multiple libraries, helping reveal whether cultural infrastructure is concentrated in only a small number of local centres.
-      </p>
+      <div class="map-wrapper" id="nodes_wrapper">
+        <div id="library_nodes_map"></div>
+      </div>
+      <p class="map-hint">Scroll to zoom &nbsp;·&nbsp; Drag to pan &nbsp;·&nbsp; Double-click to reset</p>
+      <div class="annotation">
+        <strong>Library infrastructure is clustered.</strong> A handful of inner-city SA2s host multiple branches, while most outer suburbs have none. The concentration in inner Melbourne is immediately clear — outer growth corridors to the west and south-east show almost no presence.
+      </div>
     </section>
 
     <section class="chart-card">
+      <div class="map-wrapper" id="access_wrapper">
         <div id="library_access_map"></div>
-
-      <p class="annotation">
-        Most outer SA2 areas appear in the lowest access range, while higher library access is concentrated in selected inner and established suburban areas.
-        This map provides the baseline for the later cultural desert analysis, where library access will be compared with socioeconomic disadvantage.
-      </p>
+      </div>
+      <p class="map-hint">Scroll to zoom &nbsp;·&nbsp; Drag to pan &nbsp;·&nbsp; Double-click to reset</p>
+      <div class="annotation">
+        <strong>Outer western suburbs show the lowest library access per resident.</strong> Libraries per 10,000 residents reveals deep spatial inequality — inner and established suburbs sit at the dark end of the scale; fringe growth areas sit at near-zero.
+      </div>
     </section>
 
     <section class="chart-card">
       <div id="seifa_access_scatter"></div>
-
-      <p class="annotation">
-        This scatterplot compares socioeconomic disadvantage with library access.
-        SA2 areas in the lower-left pattern combine lower IRSD scores with limited or no local library access, making them important candidates for later cultural desert analysis.
-      </p>
+      <div class="annotation">
+        <strong>The most disadvantaged SA2s are also the least served by libraries.</strong> Each circle is one SA2, sized by population. The lower-left quadrant (low IRSD, low library access) concentrates the highest-risk communities — wealthier areas almost always have better provision.
+      </div>
     </section>
 
     <p class="source-note">
@@ -129,9 +138,109 @@
   </main>
 
   <script>
-    vegaEmbed("#library_nodes_map", "charts/library_nodes_map.vl.json", { actions: false }).catch(console.error);
-    vegaEmbed("#library_access_map", "charts/library_access_map.vl.json", { actions: false }).catch(console.error); 
-    vegaEmbed("#seifa_access_scatter", "charts/seifa_access_scatter.vl.json", { actions: false }).catch(console.error);
+    var _maps = {};
+
+    function _apply(s) {
+      if (!s.target) return;
+      s.target.style.transformOrigin = '0 0';
+      s.target.style.transform = (s.scale === 1 && s.tx === 0 && s.ty === 0)
+        ? ''
+        : 'translate(' + s.tx + 'px,' + s.ty + 'px) scale(' + s.scale + ')';
+    }
+
+    document.addEventListener('wheel', function(e) {
+      for (var id in _maps) {
+        var s = _maps[id];
+        if (!s.wrapper || !s.wrapper.contains(e.target)) continue;
+        e.preventDefault();
+        var r  = s.wrapper.getBoundingClientRect();
+        var mx = e.clientX - r.left;
+        var my = e.clientY - r.top;
+        var f  = e.deltaY < 0 ? 1.08 : 0.926;
+        var ns = Math.max(1, Math.min(10, s.scale * f));
+        s.tx = mx - (mx - s.tx) * ns / s.scale;
+        s.ty = my - (my - s.ty) * ns / s.scale;
+        s.scale = ns;
+        if (s.scale <= 1) { s.scale = 1; s.tx = 0; s.ty = 0; }
+        _apply(s);
+        s.wrapper.style.cursor = s.scale > 1 ? 'grab' : 'default';
+        break;
+      }
+    }, { passive: false });
+
+    document.addEventListener('mousedown', function(e) {
+      for (var id in _maps) {
+        var s = _maps[id];
+        if (s.scale > 1 && s.wrapper && s.wrapper.contains(e.target)) {
+          s.drag = true; s.lx = e.clientX; s.ly = e.clientY;
+          s.wrapper.style.cursor = 'grabbing';
+          e.preventDefault();
+          break;
+        }
+      }
+    });
+
+    document.addEventListener('mousemove', function(e) {
+      for (var id in _maps) {
+        var s = _maps[id];
+        if (s.drag) {
+          s.tx += e.clientX - s.lx;
+          s.ty += e.clientY - s.ly;
+          s.lx = e.clientX; s.ly = e.clientY;
+          _apply(s);
+        }
+      }
+    });
+
+    document.addEventListener('mouseup', function() {
+      for (var id in _maps) {
+        var s = _maps[id];
+        if (s.drag) {
+          s.drag = false;
+          s.wrapper.style.cursor = s.scale > 1 ? 'grab' : 'default';
+        }
+      }
+    });
+
+    document.addEventListener('dblclick', function(e) {
+      for (var id in _maps) {
+        var s = _maps[id];
+        if (s.wrapper && s.wrapper.contains(e.target)) {
+          s.scale = 1; s.tx = 0; s.ty = 0;
+          _apply(s);
+          s.wrapper.style.cursor = 'default';
+          break;
+        }
+      }
+    });
+
+    function registerMap(embedResult, wrapperId) {
+      setTimeout(function() {
+        var wrapper = document.getElementById(wrapperId);
+        var target = embedResult.el
+          ? (embedResult.el.querySelector('.vega-embed') || embedResult.el)
+          : document.querySelector('#' + wrapperId + ' .vega-embed');
+        if (!wrapper || !target) return;
+        var rect = target.getBoundingClientRect();
+        if (rect.width > 0) {
+          wrapper.style.width  = rect.width  + 'px';
+          wrapper.style.height = rect.height + 'px';
+        }
+        _maps[wrapperId] = { wrapper: wrapper, target: target,
+          scale: 1, tx: 0, ty: 0, drag: false, lx: 0, ly: 0 };
+      }, 500);
+    }
+
+    vegaEmbed("#library_nodes_map", "charts/library_nodes_map.vl.json", { actions: false })
+      .then(function(r) { registerMap(r, 'nodes_wrapper'); })
+      .catch(console.error);
+
+    vegaEmbed("#library_access_map", "charts/library_access_map.vl.json", { actions: false })
+      .then(function(r) { registerMap(r, 'access_wrapper'); })
+      .catch(console.error);
+
+    vegaEmbed("#seifa_access_scatter", "charts/seifa_access_scatter.vl.json", { actions: false })
+      .catch(console.error);
   </script>
 </body>
 </html>
