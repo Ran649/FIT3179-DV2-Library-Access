@@ -14,7 +14,8 @@
   "data": {"url": "../data/processed/master_sa2.csv"},
 
   "transform": [
-    {"filter": "datum.IRSD_decile > 0 && datum.bach_pct > 0"}
+    {"filter": "datum.IRSD_decile > 0 && datum.bach_pct > 0"},
+    {"calculate": "toNumber(datum.IRSD_decile)", "as": "decile_num"}
   ],
 
   "layer": [
@@ -32,6 +33,7 @@
           "field": "IRSD_decile",
           "type": "ordinal",
           "title": "IRSD Decile (1 = most disadvantaged)",
+          "sort": {"field": "decile_num", "order": "ascending"},
           "axis": {
             "labelExpr": "datum.label == 1 ? '1 (Most disadv.)' : datum.label == 10 ? '10 (Least disadv.)' : datum.label + ''"
           }
@@ -56,7 +58,7 @@
       ],
       "mark": {
         "type": "circle",
-        "size": 90,
+        "size": 60,
         "opacity": 0.9,
         "stroke": "white",
         "strokeWidth": 1.5
@@ -64,7 +66,8 @@
       "encoding": {
         "x": {
           "field": "IRSD_decile",
-          "type": "ordinal"
+          "type": "ordinal",
+          "sort": {"field": "decile_num", "order": "ascending"}
         },
         "y": {
           "field": "bach_pct",
