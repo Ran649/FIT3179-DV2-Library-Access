@@ -10,7 +10,7 @@
     "subtitleFontSize": 14
   },
   "data": {
-    "url": "data/processed/master_sa2.csv"
+    "url": "../data/processed/master_sa2.csv"
   },
   "transform": [
     {
