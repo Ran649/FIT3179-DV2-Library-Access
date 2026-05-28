@@ -21,6 +21,7 @@
       ],
       "groupby": ["IRSD_decile"]
     },
+    {"calculate": "toNumber(datum.IRSD_decile)", "as": "decile_num"},
     {"calculate": "0", "as": "baseline"}
   ],
 
@@ -31,7 +32,7 @@
         "y": {
           "field": "IRSD_decile",
           "type": "ordinal",
-          "sort": "descending",
+          "sort": {"field": "decile_num", "order": "descending"},
           "title": "IRSD Decile (1 = most disadvantaged)",
           "axis": {
             "labelExpr": "datum.label == 1 ? '1 (Most disadvantaged)' : datum.label == 10 ? '10 (Least disadvantaged)' : datum.label + ''"
@@ -53,7 +54,7 @@
         "y": {
           "field": "IRSD_decile",
           "type": "ordinal",
-          "sort": "descending"
+          "sort": {"field": "decile_num", "order": "descending"}
         },
         "x": {
           "field": "mean_access",
@@ -79,7 +80,7 @@
         "y": {
           "field": "IRSD_decile",
           "type": "ordinal",
-          "sort": "descending"
+          "sort": {"field": "decile_num", "order": "descending"}
         },
         "x": {
           "field": "mean_access",
