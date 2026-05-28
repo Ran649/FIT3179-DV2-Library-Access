@@ -38,6 +38,15 @@
       text-align: left;
     }
 
+    .section-heading {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #888;
+      margin: 48px 0 12px 0;
+    }
+
     .chart-card {
       background: #fffaf3;
       border-radius: 18px;
@@ -91,6 +100,45 @@
       color: #666;
       line-height: 1.5;
     }
+
+    .kpi-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin: 0 0 48px 0;
+    }
+
+    .kpi-card {
+      flex: 1 1 160px;
+      background: #fffaf3;
+      border-radius: 14px;
+      padding: 20px 22px 18px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+      border-top: 4px solid #c65f32;
+      min-width: 140px;
+    }
+
+    .kpi-number {
+      font-size: 38px;
+      font-weight: 800;
+      line-height: 1;
+      color: #7a2a12;
+      letter-spacing: -0.02em;
+    }
+
+    .kpi-unit {
+      font-size: 18px;
+      font-weight: 700;
+      color: #7a2a12;
+      margin-left: 2px;
+    }
+
+    .kpi-label {
+      font-size: 13px;
+      color: #666;
+      margin-top: 6px;
+      line-height: 1.4;
+    }
   </style>
 </head>
 
@@ -104,35 +152,123 @@
       This visualisation investigates which Greater Melbourne communities have nearby library services, which areas rely more heavily on transport, and where low access overlaps with socioeconomic disadvantage.
     </p>
 
+    <div class="kpi-row">
+      <div class="kpi-card">
+        <div><span class="kpi-number">356</span></div>
+        <div class="kpi-label">SA2 areas in Greater Melbourne</div>
+      </div>
+      <div class="kpi-card">
+        <div><span class="kpi-number">4.9</span><span class="kpi-unit">M</span></div>
+        <div class="kpi-label">total residents across the study area</div>
+      </div>
+      <div class="kpi-card">
+        <div><span class="kpi-number">42</span></div>
+        <div class="kpi-label">public libraries across Greater Melbourne</div>
+      </div>
+      <div class="kpi-card">
+        <div><span class="kpi-number">88.8</span><span class="kpi-unit">%</span></div>
+        <div class="kpi-label">of SA2 areas contain zero public libraries</div>
+      </div>
+      <div class="kpi-card">
+        <div><span class="kpi-number">86.7</span><span class="kpi-unit">%</span></div>
+        <div class="kpi-label">of residents live in a library-free SA2</div>
+      </div>
+    </div>
+
+    <p class="section-heading">1. The Disadvantage Backdrop</p>
+    <section class="chart-card">
+      <div class="map-wrapper" id="seifa_wrapper">
+        <div id="seifa_map"></div>
+      </div>
+      <p class="map-hint">Scroll to zoom  ·  Drag to pan  ·  Double-click to reset</p>
+      <div class="annotation">
+        <strong>Disadvantage is concentrated on Melbourne's outer fringe.</strong> Western and south-eastern growth corridors record the lowest IRSD scores, while inner-city and eastern suburbs show markedly higher advantage. This spatial divide shapes nearly every other dimension of access explored below.
+      </div>
+    </section>
+
+    <p class="section-heading">2. Who Is Disadvantaged?</p>
+    <section class="chart-card">
+      <div id="income_edu_scatter"></div>
+      <div class="annotation">
+        <strong>Low income and low education reinforce each other.</strong> SA2s in the lower-left quadrant combine below-median weekly incomes with lower degree-attainment rates. The darkest circles  -  IRSD deciles 1-3  -  cluster almost entirely in this zone, confirming that educational and economic disadvantage overlap strongly across Melbourne's fringe suburbs.
+      </div>
+    </section>
+
+    <p class="section-heading">3. How Do People Get Around?</p>
+    <section class="chart-card">
+      <div class="map-wrapper" id="cardep_wrapper">
+        <div id="car_dep_map"></div>
+      </div>
+      <p class="map-hint">Scroll to zoom  ·  Drag to pan  ·  Double-click to reset</p>
+      <div class="annotation">
+        <strong>Outer suburbs average nearly three cars per household.</strong> High car ownership in fringe growth areas reflects poor public transport coverage rather than affluence. Residents in these zones who cannot drive  -  children, the elderly, people with disabilities  -  depend entirely on walkable local services. When those services are absent, the consequences are severe.
+      </div>
+    </section>
+
+    <p class="section-heading">4. Library Infrastructure</p>
     <section class="chart-card">
       <div class="map-wrapper" id="nodes_wrapper">
         <div id="library_nodes_map"></div>
       </div>
-      <p class="map-hint">Scroll to zoom &nbsp;·&nbsp; Drag to pan &nbsp;·&nbsp; Double-click to reset</p>
+      <p class="map-hint">Scroll to zoom  ·  Drag to pan  ·  Double-click to reset</p>
       <div class="annotation">
-        <strong>Library infrastructure is clustered.</strong> A handful of inner-city SA2s host multiple branches, while most outer suburbs have none. The concentration in inner Melbourne is immediately clear — outer growth corridors to the west and south-east show almost no presence.
+        <strong>Library infrastructure is clustered.</strong> A handful of inner-city SA2s host multiple branches, while most outer suburbs have none. The concentration in inner Melbourne is immediately clear  -  outer growth corridors to the west and south-east show almost no presence.
       </div>
     </section>
 
+    <p class="section-heading">5. Access per Resident</p>
     <section class="chart-card">
       <div class="map-wrapper" id="access_wrapper">
         <div id="library_access_map"></div>
       </div>
-      <p class="map-hint">Scroll to zoom &nbsp;·&nbsp; Drag to pan &nbsp;·&nbsp; Double-click to reset</p>
+      <p class="map-hint">Scroll to zoom  ·  Drag to pan  ·  Double-click to reset</p>
       <div class="annotation">
-        <strong>Outer western suburbs show the lowest library access per resident.</strong> Libraries per 10,000 residents reveals deep spatial inequality — inner and established suburbs sit at the dark end of the scale; fringe growth areas sit at near-zero.
+        <strong>Outer western suburbs show the lowest library access per resident.</strong> Libraries per 10,000 residents reveals deep spatial inequality  -  inner and established suburbs sit at the dark end of the scale; fringe growth areas sit at near-zero.
       </div>
     </section>
 
+    <p class="section-heading">6. Disadvantage Meets Low Access</p>
     <section class="chart-card">
       <div id="seifa_access_scatter"></div>
       <div class="annotation">
-        <strong>The most disadvantaged SA2s are also the least served by libraries.</strong> Each circle is one SA2, sized by population. The lower-left quadrant (low IRSD, low library access) concentrates the highest-risk communities — wealthier areas almost always have better provision.
+        <strong>The most disadvantaged SA2s are also the least served by libraries.</strong> Each circle is one SA2, sized by population. The lower-left quadrant (low IRSD, low library access) concentrates the highest-risk communities  -  wealthier areas almost always have better provision.
+      </div>
+    </section>
+
+    <p class="section-heading">7. Library Access by Disadvantage Level</p>
+    <section class="chart-card">
+      <div id="library_by_decile"></div>
+      <div class="annotation">
+        <strong>Disadvantaged deciles receive the fewest libraries per resident.</strong> Deciles 1-3 sit at or near zero, while deciles 9-10 average more than three times higher provision. The gradient is nearly monotonic  -  every step up the advantage ladder brings measurably better library access.
+      </div>
+    </section>
+
+    <p class="section-heading">8. Access, Disadvantage and Car Dependency</p>
+    <section class="chart-card">
+      <div id="access_heatmap"></div>
+      <div class="annotation">
+        <strong>The worst-served cell is the most disadvantaged and most car-dependent.</strong> SA2s in IRSD deciles 1-3 with high car ownership record virtually zero library provision  -  a double bind where public transport is absent and library infrastructure has never been built. Low-car areas in this same decile group, by contrast, include inner-city pockets that happen to have high provision, exposing how uneven the geographic distribution truly is.
+      </div>
+    </section>
+
+    <p class="section-heading">9. Education Outcomes and Library Access</p>
+    <section class="chart-card">
+      <div id="edu_boxplot"></div>
+      <div class="annotation">
+        <strong>SA2s with libraries consistently sit at the upper end of the education distribution in their decile.</strong> The teal circles mark areas that contain at least one public library  -  they cluster toward the top of each decile's box, while library-free SA2s pull the median down. In the most disadvantaged deciles, nearly all SA2s have no library and record the lowest education rates. This chart shows that library access and education outcomes are linked across every level of disadvantage.
+      </div>
+    </section>
+
+    <p class="section-heading">10. Who Lives Without a Library?</p>
+    <section class="chart-card">
+      <div id="pop_coverage"></div>
+      <div class="annotation">
+        <strong>Nearly all residents in disadvantaged deciles live in library-free SA2s.</strong> The teal sliver in lower deciles is vanishingly thin  -  over 85% of people in deciles 1-3 reside in a statistical area that contains no public library at all. Higher deciles show a more even split, reflecting both greater infrastructure investment and the smaller, denser SA2 boundaries in established suburbs.
       </div>
     </section>
 
     <p class="source-note">
-      Data sources: ABS SA2 boundaries 2021, ABS SEIFA 2021, Victoria public library locations dataset.
+      Data sources: ABS SA2 boundaries 2021, ABS SEIFA 2021, ABS Census 2021 (G17, G34, G49), Victoria public library locations dataset.
       Author: Ran Xiao. Created for FIT2179 Data Visualisation 2.
     </p>
   </main>
@@ -231,6 +367,17 @@
       }, 500);
     }
 
+    vegaEmbed("#seifa_map", "charts/seifa_choropleth.vl.json", { actions: false })
+      .then(function(r) { registerMap(r, 'seifa_wrapper'); })
+      .catch(console.error);
+
+    vegaEmbed("#income_edu_scatter", "charts/income_education_scatter.vl.json", { actions: false })
+      .catch(console.error);
+
+    vegaEmbed("#car_dep_map", "charts/car_dependency_map.vl.json", { actions: false })
+      .then(function(r) { registerMap(r, 'cardep_wrapper'); })
+      .catch(console.error);
+
     vegaEmbed("#library_nodes_map", "charts/library_nodes_map.vl.json", { actions: false })
       .then(function(r) { registerMap(r, 'nodes_wrapper'); })
       .catch(console.error);
@@ -240,6 +387,18 @@
       .catch(console.error);
 
     vegaEmbed("#seifa_access_scatter", "charts/seifa_access_scatter.vl.json", { actions: false })
+      .catch(console.error);
+
+    vegaEmbed("#library_by_decile", "charts/library_access_by_decile.vl.json", { actions: false })
+      .catch(console.error);
+
+    vegaEmbed("#access_heatmap", "charts/access_coverage_heatmap.vl.json", { actions: false })
+      .catch(console.error);
+
+    vegaEmbed("#edu_boxplot", "charts/education_distribution_boxplot.vl.json", { actions: false })
+      .catch(console.error);
+
+    vegaEmbed("#pop_coverage", "charts/population_library_coverage.vl.json", { actions: false })
       .catch(console.error);
   </script>
 </body>
