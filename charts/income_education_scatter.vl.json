@@ -1,0 +1,127 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 830,
+  "height": 520,
+
+  "title": {
+    "text": "Income and Education Levels Across Melbourne SA2 Areas",
+    "subtitle": "Each circle is an SA2 area, sized by population; colour shows IRSD disadvantage decile",
+    "anchor": "middle",
+    "fontSize": 24,
+    "subtitleFontSize": 14
+  },
+
+  "data": {
+    "url": "../data/processed/master_sa2.csv"
+  },
+
+  "transform": [
+    {
+      "filter": "datum.mean_weekly_income > 0 && datum.bach_pct > 0"
+    },
+    {
+      "calculate": "datum.mean_weekly_income < 1058 && datum.bach_pct < 0.48 ? 'Low income + low education' : datum.mean_weekly_income < 1058 ? 'Low income, higher education' : datum.bach_pct < 0.48 ? 'Higher income, lower education' : 'Higher income + higher education'",
+      "as": "quadrant"
+    }
+  ],
+
+  "layer": [
+    {
+      "mark": {
+        "type": "circle",
+        "opacity": 0.72,
+        "stroke": "white",
+        "strokeWidth": 0.7
+      },
+      "encoding": {
+        "x": {
+          "field": "mean_weekly_income",
+          "type": "quantitative",
+          "title": "Mean weekly income (AUD)",
+          "scale": {"domain": [550, 1850]}
+        },
+        "y": {
+          "field": "bach_pct",
+          "type": "quantitative",
+          "title": "Bachelor degree or above (% of residents 15+)",
+          "axis": {"format": ".0%"},
+          "scale": {"domain": [0.1, 0.85]}
+        },
+        "size": {
+          "field": "population",
+          "type": "quantitative",
+          "title": "Population",
+          "scale": {"range": [20, 220]}
+        },
+        "color": {
+          "field": "IRSD_decile",
+          "type": "quantitative",
+          "title": "IRSD Decile",
+          "scale": {
+            "domain": [1, 10],
+            "range": ["#7a2a12", "#d4844a", "#f0d4a0", "#60a898", "#1a5060"]
+          },
+          "legend": {
+            "orient": "right",
+            "format": "d",
+            "values": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+          }
+        },
+        "tooltip": [
+          {"field": "SA2_NAME21", "type": "nominal", "title": "SA2 Area"},
+          {"field": "population", "type": "quantitative", "title": "Population", "format": ","},
+          {"field": "mean_weekly_income", "type": "quantitative", "title": "Mean weekly income ($)", "format": ",.0f"},
+          {"field": "bach_pct", "type": "quantitative", "title": "Bachelor+ rate", "format": ".1%"},
+          {"field": "IRSD_decile", "type": "quantitative", "title": "IRSD Decile"},
+          {"field": "quadrant", "type": "nominal", "title": "Group"}
+        ]
+      }
+    },
+    {
+      "data": {"values": [{"mean_weekly_income": 1058}]},
+      "mark": {"type": "rule", "strokeDash": [5, 5], "stroke": "#777", "opacity": 0.7},
+      "encoding": {"x": {"field": "mean_weekly_income", "type": "quantitative"}}
+    },
+    {
+      "data": {"values": [{"bach_pct": 0.48}]},
+      "mark": {"type": "rule", "strokeDash": [5, 5], "stroke": "#777", "opacity": 0.7},
+      "encoding": {"y": {"field": "bach_pct", "type": "quantitative"}}
+    },
+    {
+      "data": {
+        "values": [
+          {"mean_weekly_income": 580, "bach_pct": 0.82, "label": "Higher education, lower income"},
+          {"mean_weekly_income": 580, "bach_pct": 0.14, "label": "Double disadvantage: low income + low education"},
+          {"mean_weekly_income": 1200, "bach_pct": 0.82, "label": "Advantaged SA2s"}
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "fontSize": 12,
+        "fontWeight": "bold",
+        "color": "#444",
+        "dx": 6
+      },
+      "encoding": {
+        "x": {"field": "mean_weekly_income", "type": "quantitative"},
+        "y": {"field": "bach_pct", "type": "quantitative"},
+        "text": {"field": "label"}
+      }
+    }
+  ],
+
+  "config": {
+    "background": "#f7f4ef",
+    "view": {"stroke": null},
+    "axis": {
+      "labelFontSize": 11,
+      "titleFontSize": 12,
+      "gridColor": "#ddd8cf"
+    },
+    "legend": {
+      "labelFontSize": 11,
+      "titleFontSize": 12
+    }
+  }
+}
