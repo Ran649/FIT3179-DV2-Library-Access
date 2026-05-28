@@ -1,0 +1,84 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 760,
+  "height": 560,
+
+  "title": {
+    "text": "Car Dependency Across Greater Melbourne",
+    "subtitle": "Average motor vehicles per household by SA2 area",
+    "anchor": "middle",
+    "fontSize": 24,
+    "subtitleFontSize": 14
+  },
+
+  "data": {
+    "url": "../data/raw/melbourne_sa2.json",
+    "format": {
+      "type": "json",
+      "property": "features"
+    }
+  },
+  "transform": [
+    {
+      "lookup": "properties.SA2_CODE21",
+      "from": {
+        "data": {
+          "url": "../data/processed/car_dependency.csv"
+        },
+        "key": "SA2_CODE21",
+        "fields": ["zero_car_pct", "avg_cars"]
+      }
+    }
+  ],
+  "projection": {
+    "type": "identity",
+    "reflectY": true
+  },
+  "mark": {
+    "type": "geoshape",
+    "stroke": "white",
+    "strokeWidth": 0.6
+  },
+  "encoding": {
+    "color": {
+      "field": "avg_cars",
+      "type": "quantitative",
+      "title": "Avg cars per household",
+      "scale": {
+        "range": ["#edf2f8", "#b8cfe8", "#7aaac8", "#3c7aa8", "#1a4c78"],
+        "domain": [0.5, 2.7],
+        "clamp": true
+      }
+    },
+    "tooltip": [
+      {
+        "field": "properties.SA2_NAME21",
+        "type": "nominal",
+        "title": "SA2 Area"
+      },
+      {
+        "field": "avg_cars",
+        "type": "quantitative",
+        "title": "Avg cars per household",
+        "format": ".2f"
+      },
+      {
+        "field": "zero_car_pct",
+        "type": "quantitative",
+        "title": "Car-free households",
+        "format": ".1%"
+      }
+    ]
+  },
+  "config": {
+    "background": "#f7f4ef",
+    "padding": 0,
+    "view": {
+      "stroke": null
+    },
+    "legend": {
+      "labelFontSize": 11,
+      "titleFontSize": 12
+    }
+  }
+}
