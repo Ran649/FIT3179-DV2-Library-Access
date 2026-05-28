@@ -14,29 +14,49 @@
   "data": {"url": "../data/processed/master_sa2.csv"},
 
   "transform": [
-    {"filter": "datum.IRSD_decile > 0"}
+    {"filter": "datum.IRSD_decile > 0"},
+    {
+      "aggregate": [
+        {"op": "mean", "field": "libraries_per_10000", "as": "mean_access"}
+      ],
+      "groupby": ["IRSD_decile"]
+    },
+    {"calculate": "0", "as": "baseline"}
   ],
 
   "layer": [
     {
-      "mark": {
-        "type": "bar",
-        "cornerRadiusTopRight": 4,
-        "cornerRadiusBottomRight": 4
-      },
+      "mark": {"type": "rule", "strokeWidth": 3},
       "encoding": {
         "y": {
           "field": "IRSD_decile",
           "type": "ordinal",
-          "title": "IRSD Decile (1 = most disadvantaged)",
           "sort": "descending",
+          "title": "IRSD Decile (1 = most disadvantaged)",
           "axis": {
             "labelExpr": "datum.label == 1 ? '1 (Most disadvantaged)' : datum.label == 10 ? '10 (Least disadvantaged)' : datum.label + ''"
           }
         },
+        "x": {"field": "baseline", "type": "quantitative"},
+        "x2": {"field": "mean_access"},
+        "color": {
+          "field": "IRSD_decile",
+          "type": "quantitative",
+          "legend": null,
+          "scale": {"domain": [1, 10], "range": ["#7a2a12", "#1a5060"]}
+        }
+      }
+    },
+    {
+      "mark": {"type": "circle", "size": 150},
+      "encoding": {
+        "y": {
+          "field": "IRSD_decile",
+          "type": "ordinal",
+          "sort": "descending"
+        },
         "x": {
-          "aggregate": "mean",
-          "field": "libraries_per_10000",
+          "field": "mean_access",
           "type": "quantitative",
           "title": "Mean libraries per 10,000 residents",
           "scale": {"domain": [0, 0.16]}
@@ -45,37 +65,16 @@
           "field": "IRSD_decile",
           "type": "quantitative",
           "legend": null,
-          "scale": {
-            "domain": [1, 10],
-            "range": ["#7a2a12", "#1a5060"]
-          }
+          "scale": {"domain": [1, 10], "range": ["#7a2a12", "#1a5060"]}
         },
         "tooltip": [
           {"field": "IRSD_decile", "type": "ordinal", "title": "IRSD Decile"},
-          {
-            "aggregate": "mean",
-            "field": "libraries_per_10000",
-            "type": "quantitative",
-            "title": "Mean libraries per 10,000",
-            "format": ".3f"
-          },
-          {
-            "aggregate": "count",
-            "field": "SA2_CODE21",
-            "type": "quantitative",
-            "title": "SA2 areas in decile"
-          }
+          {"field": "mean_access", "type": "quantitative", "title": "Mean libraries per 10,000", "format": ".3f"}
         ]
       }
     },
     {
-      "mark": {
-        "type": "text",
-        "align": "left",
-        "dx": 4,
-        "fontSize": 11,
-        "color": "#555"
-      },
+      "mark": {"type": "text", "align": "left", "dx": 10, "fontSize": 11, "color": "#555"},
       "encoding": {
         "y": {
           "field": "IRSD_decile",
@@ -83,13 +82,11 @@
           "sort": "descending"
         },
         "x": {
-          "aggregate": "mean",
-          "field": "libraries_per_10000",
+          "field": "mean_access",
           "type": "quantitative"
         },
         "text": {
-          "aggregate": "mean",
-          "field": "libraries_per_10000",
+          "field": "mean_access",
           "type": "quantitative",
           "format": ".3f"
         }
