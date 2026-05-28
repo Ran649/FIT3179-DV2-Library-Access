@@ -1,0 +1,95 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 720,
+  "height": 400,
+
+  "title": {
+    "text": "Education Outcomes and Library Access by Disadvantage Decile",
+    "subtitle": "Box shows bachelor-degree distribution across SA2s; teal circles mark areas that contain a public library",
+    "anchor": "middle",
+    "fontSize": 22,
+    "subtitleFontSize": 13
+  },
+
+  "data": {"url": "../data/processed/master_sa2.csv"},
+
+  "transform": [
+    {"filter": "datum.IRSD_decile > 0 && datum.bach_pct > 0"}
+  ],
+
+  "layer": [
+    {
+      "mark": {
+        "type": "boxplot",
+        "extent": 1.5,
+        "size": 30,
+        "ticks": true,
+        "color": "#c8b898",
+        "median": {"color": "#8a6840"}
+      },
+      "encoding": {
+        "x": {
+          "field": "IRSD_decile",
+          "type": "ordinal",
+          "title": "IRSD Decile (1 = most disadvantaged)",
+          "axis": {
+            "labelExpr": "datum.label == 1 ? '1 (Most disadv.)' : datum.label == 10 ? '10 (Least disadv.)' : datum.label + ''"
+          }
+        },
+        "y": {
+          "field": "bach_pct",
+          "type": "quantitative",
+          "title": "Bachelor degree or above (% of residents 15+)",
+          "axis": {"format": ".0%"},
+          "scale": {"domain": [0.1, 0.85]}
+        },
+        "tooltip": [
+          {"field": "IRSD_decile", "type": "ordinal", "title": "IRSD Decile"},
+          {"field": "SA2_NAME21", "type": "nominal", "title": "SA2 Area"},
+          {"field": "bach_pct", "type": "quantitative", "title": "Bachelor+ rate", "format": ".1%"}
+        ]
+      }
+    },
+    {
+      "transform": [
+        {"filter": "datum.library_count > 0"}
+      ],
+      "mark": {
+        "type": "circle",
+        "size": 90,
+        "opacity": 0.9,
+        "stroke": "white",
+        "strokeWidth": 1.5
+      },
+      "encoding": {
+        "x": {
+          "field": "IRSD_decile",
+          "type": "ordinal"
+        },
+        "y": {
+          "field": "bach_pct",
+          "type": "quantitative"
+        },
+        "color": {
+          "value": "#2a8878"
+        },
+        "tooltip": [
+          {"field": "SA2_NAME21", "type": "nominal", "title": "SA2 Area"},
+          {"field": "IRSD_decile", "type": "ordinal", "title": "IRSD Decile"},
+          {"field": "bach_pct", "type": "quantitative", "title": "Bachelor+ rate", "format": ".1%"},
+          {"field": "library_count", "type": "quantitative", "title": "Libraries in SA2"}
+        ]
+      }
+    }
+  ],
+
+  "config": {
+    "background": "#f7f4ef",
+    "view": {"stroke": null},
+    "axis": {
+      "labelFontSize": 11,
+      "titleFontSize": 12,
+      "gridColor": "#ddd8cf"
+    }
+  }
+}
