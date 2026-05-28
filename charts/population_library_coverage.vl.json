@@ -1,0 +1,88 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 680,
+  "height": 380,
+
+  "title": {
+    "text": "Population With and Without Library Access by Disadvantage Decile",
+    "subtitle": "Total residents in SA2 areas that contain at least one library vs. those that contain none",
+    "anchor": "middle",
+    "fontSize": 20,
+    "subtitleFontSize": 13
+  },
+
+  "data": {"url": "../data/processed/master_sa2.csv"},
+
+  "transform": [
+    {"filter": "datum.IRSD_decile > 0"},
+    {
+      "calculate": "datum.library_count > 0 ? 'Has library' : 'No library'",
+      "as": "library_status"
+    }
+  ],
+
+  "mark": "bar",
+
+  "encoding": {
+    "x": {
+      "field": "IRSD_decile",
+      "type": "ordinal",
+      "title": "IRSD Decile (1 = most disadvantaged)",
+      "axis": {
+        "labelExpr": "datum.label == 1 ? '1 ▸ Most' : datum.label == 10 ? '10 ▸ Least' : datum.label + ''"
+      }
+    },
+    "y": {
+      "aggregate": "sum",
+      "field": "population",
+      "type": "quantitative",
+      "title": "Total population",
+      "axis": {"format": ".2s"}
+    },
+    "color": {
+      "field": "library_status",
+      "type": "nominal",
+      "title": "Library access",
+      "scale": {
+        "domain": ["Has library", "No library"],
+        "range": ["#2a8878", "#b24a2b"]
+      },
+      "legend": {
+        "orient": "top-right",
+        "labelFontSize": 12,
+        "titleFontSize": 12
+      }
+    },
+    "tooltip": [
+      {"field": "IRSD_decile", "type": "ordinal", "title": "IRSD Decile"},
+      {"field": "library_status", "type": "nominal", "title": "Library access"},
+      {
+        "aggregate": "sum",
+        "field": "population",
+        "type": "quantitative",
+        "title": "Total population",
+        "format": ","
+      },
+      {
+        "aggregate": "count",
+        "field": "SA2_CODE21",
+        "type": "quantitative",
+        "title": "Number of SA2 areas"
+      }
+    ]
+  },
+
+  "config": {
+    "background": "#f7f4ef",
+    "view": {"stroke": null},
+    "axis": {
+      "labelFontSize": 11,
+      "titleFontSize": 12,
+      "gridColor": "#ddd8cf"
+    },
+    "legend": {
+      "labelFontSize": 11,
+      "titleFontSize": 12
+    }
+  }
+}
