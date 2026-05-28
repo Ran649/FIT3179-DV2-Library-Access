@@ -1,0 +1,88 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 760,
+  "height": 560,
+
+  "title": {
+    "text": "Socioeconomic Disadvantage Across Greater Melbourne",
+    "subtitle": "IRSD score by SA2 area - lower scores indicate greater disadvantage",
+    "anchor": "middle",
+    "fontSize": 24,
+    "subtitleFontSize": 14
+  },
+
+  "data": {
+    "url": "../data/raw/melbourne_sa2.json",
+    "format": {
+      "type": "json",
+      "property": "features"
+    }
+  },
+  "transform": [
+    {
+      "lookup": "properties.SA2_CODE21",
+      "from": {
+        "data": {
+          "url": "../data/processed/master_sa2.csv"
+        },
+        "key": "SA2_CODE21",
+        "fields": ["population", "IRSD_score", "IRSD_decile"]
+      }
+    }
+  ],
+  "projection": {
+    "type": "identity",
+    "reflectY": true
+  },
+  "mark": {
+    "type": "geoshape",
+    "stroke": "white",
+    "strokeWidth": 0.6
+  },
+  "encoding": {
+    "color": {
+      "field": "IRSD_score",
+      "type": "quantitative",
+      "title": "IRSD Score",
+      "scale": {
+        "range": ["#7a2a12", "#d4844a", "#f0d4a0", "#96c8b8", "#1a5060"],
+        "domain": [700, 1140],
+        "clamp": true
+      }
+    },
+    "tooltip": [
+      {
+        "field": "properties.SA2_NAME21",
+        "type": "nominal",
+        "title": "SA2 Area"
+      },
+      {
+        "field": "population",
+        "type": "quantitative",
+        "title": "Population",
+        "format": ","
+      },
+      {
+        "field": "IRSD_score",
+        "type": "quantitative",
+        "title": "IRSD Score"
+      },
+      {
+        "field": "IRSD_decile",
+        "type": "ordinal",
+        "title": "IRSD Decile"
+      }
+    ]
+  },
+  "config": {
+    "background": "#f7f4ef",
+    "padding": 0,
+    "view": {
+      "stroke": null
+    },
+    "legend": {
+      "labelFontSize": 11,
+      "titleFontSize": 12
+    }
+  }
+}
