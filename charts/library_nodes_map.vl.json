@@ -20,7 +20,7 @@
   "layer": [
     {
       "data": {
-        "url": "data/raw/melbourne_sa2.json",
+        "url": "../data/raw/melbourne_sa2.json",
         "format": {
           "type": "json",
           "property": "features"
@@ -28,14 +28,14 @@
       },
       "mark": {
         "type": "geoshape",
-        "fill": "#e2ebe8",
-        "stroke": "#adc4c0",
+        "fill": "#dde8e4",
+        "stroke": "#b0c8c0",
         "strokeWidth": 0.8
       }
     },
     {
       "data": {
-        "url": "data/processed/library_nodes.csv"
+        "url": "../data/processed/library_nodes.csv"
       },
       "mark": {
         "type": "circle",
@@ -70,9 +70,9 @@
           "title": "Libraries in SA2",
           "scale": {
             "range": [
-              "#7ec8c8",
-              "#2a8fa0",
-              "#0f4f6e"
+              "#96c8b8",
+              "#2a8878",
+              "#1a5060"
             ]
           },
           "legend": {
