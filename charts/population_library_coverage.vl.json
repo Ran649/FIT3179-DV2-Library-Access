@@ -29,7 +29,7 @@
       "type": "ordinal",
       "title": "IRSD Decile (1 = most disadvantaged)",
       "axis": {
-        "labelExpr": "datum.label == 1 ? '1 ▸ Most' : datum.label == 10 ? '10 ▸ Least' : datum.label + ''"
+        "labelExpr": "datum.label == 1 ? '1 (Most disadv.)' : datum.label == 10 ? '10 (Least disadv.)' : datum.label + ''"
       }
     },
     "y": {
