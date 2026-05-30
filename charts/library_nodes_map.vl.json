@@ -20,7 +20,7 @@
   "layer": [
     {
       "data": {
-        "url": "../data/raw/melbourne_sa2.json",
+        "url": "data/raw/melbourne_sa2.json",
         "format": {
           "type": "json",
           "property": "features"
@@ -35,7 +35,7 @@
     },
     {
       "data": {
-        "url": "../data/processed/library_nodes.csv"
+        "url": "data/processed/library_nodes.csv"
       },
       "mark": {
         "type": "circle",

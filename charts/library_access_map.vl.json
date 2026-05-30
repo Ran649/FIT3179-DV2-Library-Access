@@ -12,7 +12,7 @@
   },
 
   "data": {
-    "url": "../data/raw/melbourne_sa2.json",
+    "url": "data/raw/melbourne_sa2.json",
     "format": {
       "type": "json",
       "property": "features"
@@ -23,7 +23,7 @@
       "lookup": "properties.SA2_CODE21",
       "from": {
         "data": {
-          "url": "../data/processed/master_sa2.csv"
+          "url": "data/processed/master_sa2.csv"
         },
         "key": "SA2_CODE21",
         "fields": [
