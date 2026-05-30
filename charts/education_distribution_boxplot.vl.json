@@ -90,9 +90,10 @@
     "background": "#f7f4ef",
     "view": {"stroke": null},
     "axis": {
+      "labelAngle": 0,
+      "labelExpr": "datum.label == '1' || datum.label == '1.0' ? '1\\n(Most disadv.)' : datum.label == '10' || datum.label == '10.0' ? '10\\n(Least disadv.)' : datum.label",
       "labelFontSize": 11,
-      "titleFontSize": 12,
-      "gridColor": "#ddd8cf"
+      "labelLimit": 90
     }
   }
 }
