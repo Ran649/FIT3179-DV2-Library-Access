@@ -458,10 +458,13 @@
     }
 
     function _embed(el, specFile, extraOpts) {
+      var base = window.location.href.replace(/index\.html.*$/, '').replace(/\/$/, '') + '/';
       return fetch(specFile)
         .then(r => r.json())
         .then(spec => {
-          var fixed = JSON.parse(JSON.stringify(spec).replace(/\.\.\/data\//g, 'data/'));
+          var fixed = JSON.parse(
+            JSON.stringify(spec).replace(/\.\.\/data\//g, base + 'data/')
+          );
           return vegaEmbed(el, fixed, Object.assign({actions: false}, extraOpts));
         });
     }
