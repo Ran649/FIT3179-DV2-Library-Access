@@ -1,26 +1,30 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "width": 520,
-  "height": 260,
+  "width": 560,
+  "height": 280,
 
   "title": {
     "text": "Library Access: Disadvantage Meets Car Dependency",
-    "subtitle": "Mean libraries per 10,000 residents - grouped by IRSD level and average car ownership",
+    "subtitle": "Mean libraries per 10,000 residents - Low <1.5 cars, Medium 1.5-2.0, High >2.0",
     "anchor": "middle",
     "fontSize": 22,
     "subtitleFontSize": 13
   },
 
-  "data": {"url": "../data/processed/master_sa2.csv"},
+  "data": {
+    "url": "../data/processed/master_sa2.csv"
+  },
 
   "transform": [
-    {"filter": "datum.IRSD_decile > 0 && datum.avg_cars > 0"},
     {
-      "calculate": "datum.IRSD_decile <= 3 ? 'Deciles 1-3 (Most disadvantaged)' : datum.IRSD_decile <= 7 ? 'Deciles 4-7 (Middle)' : 'Deciles 8-10 (Least disadvantaged)'",
+      "filter": "datum.IRSD_decile > 0 && datum.avg_cars > 0"
+    },
+    {
+      "calculate": "datum.IRSD_decile <= 3 ? 'Deciles 1-3\\n(Most disadvantaged)' : datum.IRSD_decile <= 7 ? 'Deciles 4-7\\n(Middle)' : 'Deciles 8-10\\n(Least disadvantaged)'",
       "as": "irsd_group"
     },
     {
-      "calculate": "datum.avg_cars > 2.0 ? 'High (>2.0 cars)' : datum.avg_cars >= 1.5 ? 'Medium (1.5-2.0)' : 'Low (<1.5 cars)'",
+      "calculate": "datum.avg_cars > 2.0 ? 'High' : datum.avg_cars >= 1.5 ? 'Medium' : 'Low'",
       "as": "car_group"
     }
   ],
@@ -33,15 +37,26 @@
           "field": "car_group",
           "type": "ordinal",
           "title": "Average Cars per Household",
-          "sort": ["Low (<1.5 cars)", "Medium (1.5-2.0)", "High (>2.0 cars)"],
-          "axis": {"labelFontSize": 12}
+          "sort": ["Low", "Medium", "High"],
+          "axis": {
+            "labelAngle": 0,
+            "labelFontSize": 12,
+            "labelLimit": 100
+          }
         },
         "y": {
           "field": "irsd_group",
           "type": "ordinal",
-          "title": "Socioeconomic Group (IRSD Deciles)",
-          "sort": ["Deciles 8-10 (Least disadvantaged)", "Deciles 4-7 (Middle)", "Deciles 1-3 (Most disadvantaged)"],
-          "axis": {"labelFontSize": 12}
+          "title": "Socioeconomic Group",
+          "sort": [
+            "Deciles 8-10\n(Least disadvantaged)",
+            "Deciles 4-7\n(Middle)",
+            "Deciles 1-3\n(Most disadvantaged)"
+          ],
+          "axis": {
+            "labelFontSize": 12,
+            "labelLimit": 160
+          }
         },
         "color": {
           "aggregate": "mean",
@@ -52,11 +67,22 @@
             "range": ["#f0e4d0", "#e8b87a", "#d4844a", "#c65f32", "#7a2a12"],
             "domain": [0, 0.25]
           },
-          "legend": {"format": ".3f", "orient": "right"}
+          "legend": {
+            "format": ".3f",
+            "orient": "right"
+          }
         },
         "tooltip": [
-          {"field": "irsd_group", "type": "nominal", "title": "Socioeconomic Group"},
-          {"field": "car_group", "type": "nominal", "title": "Car Ownership"},
+          {
+            "field": "irsd_group",
+            "type": "nominal",
+            "title": "Socioeconomic Group"
+          },
+          {
+            "field": "car_group",
+            "type": "nominal",
+            "title": "Car Ownership"
+          },
           {
             "aggregate": "mean",
             "field": "libraries_per_10000",
@@ -77,25 +103,35 @@
       "mark": {
         "type": "text",
         "fontSize": 15,
-        "fontWeight": "bold",
-        "color": "#333333"
+        "fontWeight": "bold"
       },
       "encoding": {
         "x": {
           "field": "car_group",
           "type": "ordinal",
-          "sort": ["Low (<1.5 cars)", "Medium (1.5-2.0)", "High (>2.0 cars)"]
+          "sort": ["Low", "Medium", "High"]
         },
         "y": {
           "field": "irsd_group",
           "type": "ordinal",
-          "sort": ["Deciles 8-10 (Least disadvantaged)", "Deciles 4-7 (Middle)", "Deciles 1-3 (Most disadvantaged)"]
+          "sort": [
+            "Deciles 8-10\n(Least disadvantaged)",
+            "Deciles 4-7\n(Middle)",
+            "Deciles 1-3\n(Most disadvantaged)"
+          ]
         },
         "text": {
           "aggregate": "mean",
           "field": "libraries_per_10000",
           "type": "quantitative",
           "format": ".3f"
+        },
+        "color": {
+          "condition": {
+            "test": "datum.car_group == 'Low'",
+            "value": "white"
+          },
+          "value": "#333333"
         }
       }
     }
@@ -103,7 +139,9 @@
 
   "config": {
     "background": "#f7f4ef",
-    "view": {"stroke": null},
+    "view": {
+      "stroke": null
+    },
     "axis": {
       "labelFontSize": 11,
       "titleFontSize": 12,
