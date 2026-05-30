@@ -457,6 +457,15 @@
       return fetch(specFile).then(r => r.json()).then(spec => vegaEmbed(el, spec, {actions: false}));
     }
 
+    function _embed(el, specFile, extraOpts) {
+      return fetch(specFile)
+        .then(r => r.json())
+        .then(spec => {
+          var fixed = JSON.parse(JSON.stringify(spec).replace(/\.\.\/data\//g, 'data/'));
+          return vegaEmbed(el, fixed, Object.assign({actions: false}, extraOpts));
+        });
+    }
+
     _embed("#seifa_map", "charts/seifa_choropleth.vl.json")
       .then(function(r) { registerMap(r, 'seifa_wrapper'); })
       .catch(console.error);
