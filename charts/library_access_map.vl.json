@@ -1,6 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "width": 760,
+  "width": 740,
   "height": 560,
 
   "title": {
@@ -54,6 +54,13 @@
         "range": ["#f0e4d0", "#e8b87a", "#d4844a", "#c65f32", "#7a2a12"],
         "domain": [0, 1],
         "clamp": true
+      },
+      "legend": {
+        "orient": "right",
+        "direction": "vertical",
+        "gradientLength": 220,
+        "gradientThickness": 20,
+        "titleAnchor": "middle"
       }
     },
     "tooltip": [

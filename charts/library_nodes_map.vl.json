@@ -1,7 +1,7 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
 
-  "width": 840,
+  "width": 800,
   "height": 560,
 
   "title": {
@@ -77,7 +77,13 @@
           },
           "legend": {
             "orient": "right",
-            "title": "Libraries in SA2"
+            "title": "Libraries in SA2",
+            "direction": "vertical",
+            "gradientLength": 220,
+            "gradientThickness": 20,
+            "titleAnchor": "middle",
+            "labelFontSize": 11,
+            "titleFontSize": 12
           }
         },
         "tooltip": [

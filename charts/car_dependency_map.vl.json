@@ -48,6 +48,15 @@
         "range": ["#edf2f8", "#b8cfe8", "#7aaac8", "#3c7aa8", "#1a4c78"],
         "domain": [0.5, 2.7],
         "clamp": true
+      },
+      "legend": {
+        "orient": "right",
+        "direction": "vertical",
+        "gradientLength": 220,
+        "gradientThickness": 20,
+        "titleAnchor": "middle",
+        "labelFontSize": 11,
+        "titleFontSize": 12
       }
     },
     "tooltip": [
