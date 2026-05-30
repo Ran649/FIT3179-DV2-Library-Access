@@ -1,7 +1,7 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "width": 680,
-  "height": 380,
+  "width": 840,
+  "height": 400,
 
   "title": {
     "text": "Population With and Without Library Access by Disadvantage Decile",

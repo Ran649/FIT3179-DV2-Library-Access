@@ -1,6 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "width": 830,
+  "width": 800,
   "height": 560,
   "title": {
     "text": "Socioeconomic Disadvantage and Library Access",
