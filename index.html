@@ -453,38 +453,41 @@
       }, 500);
     }
 
-    vegaEmbed("#seifa_map", "charts/seifa_choropleth.vl.json", { actions: false })
+    var _loader = vega.loader({baseURL: "charts/"});
+    var _opts   = { actions: false, loader: _loader };
+
+    vegaEmbed("#seifa_map", "charts/seifa_choropleth.vl.json", _opts)
       .then(function(r) { registerMap(r, 'seifa_wrapper'); })
       .catch(console.error);
 
-    vegaEmbed("#income_edu_scatter", "charts/income_education_scatter.vl.json", { actions: false })
+    vegaEmbed("#income_edu_scatter", "charts/income_education_scatter.vl.json", _opts)
       .catch(console.error);
 
-    vegaEmbed("#car_dep_map", "charts/car_dependency_map.vl.json", { actions: false })
+    vegaEmbed("#car_dep_map", "charts/car_dependency_map.vl.json", _opts)
       .then(function(r) { registerMap(r, 'cardep_wrapper'); })
       .catch(console.error);
 
-    vegaEmbed("#library_nodes_map", "charts/library_nodes_map.vl.json", { actions: false })
+    vegaEmbed("#library_nodes_map", "charts/library_nodes_map.vl.json", _opts)
       .then(function(r) { registerMap(r, 'nodes_wrapper'); })
       .catch(console.error);
 
-    vegaEmbed("#library_access_map", "charts/library_access_map.vl.json", { actions: false })
+    vegaEmbed("#library_access_map", "charts/library_access_map.vl.json", _opts)
       .then(function(r) { registerMap(r, 'access_wrapper'); })
       .catch(console.error);
 
-    vegaEmbed("#seifa_access_scatter", "charts/seifa_access_scatter.vl.json", { actions: false })
+    vegaEmbed("#seifa_access_scatter", "charts/seifa_access_scatter.vl.json", _opts)
       .catch(console.error);
 
-    vegaEmbed("#library_by_decile", "charts/library_access_by_decile.vl.json", { actions: false })
+    vegaEmbed("#library_by_decile", "charts/library_access_by_decile.vl.json", _opts)
       .catch(console.error);
 
-    vegaEmbed("#access_heatmap", "charts/access_coverage_heatmap.vl.json", { actions: false })
+    vegaEmbed("#access_heatmap", "charts/access_coverage_heatmap.vl.json", _opts)
       .catch(console.error);
 
-    vegaEmbed("#edu_boxplot", "charts/education_distribution_boxplot.vl.json", { actions: false })
+    vegaEmbed("#edu_boxplot", "charts/education_distribution_boxplot.vl.json", _opts)
       .catch(console.error);
 
-    vegaEmbed("#pop_coverage", "charts/population_library_coverage.vl.json", { actions: false })
+    vegaEmbed("#pop_coverage", "charts/population_library_coverage.vl.json", _opts)
       .catch(console.error);
   </script>
 </body>
