@@ -30,7 +30,7 @@
       },
       "encoding": {
         "x": {
-          "field": "IRSD_decile",
+          "field": "decile_num",
           "type": "ordinal",
           "title": "IRSD Decile (1 = most disadvantaged)",
           "sort": [1,2,3,4,5,6,7,8,9,10],
@@ -68,7 +68,7 @@
       },
       "encoding": {
         "x": {
-          "field": "IRSD_decile",
+          "field": "decile_num",
           "type": "ordinal",
           "sort": [1,2,3,4,5,6,7,8,9,10]
         },
@@ -94,7 +94,6 @@
     "view": {"stroke": null},
     "axis": {
       "labelAngle": 0,
-      "labelExpr": "datum.label == '1' || datum.label == '1.0' ? '1\\n(Most disadv.)' : datum.label == '10' || datum.label == '10.0' ? '10\\n(Least disadv.)' : datum.label",
       "labelFontSize": 11,
       "labelLimit": 90
     }

@@ -16,6 +16,10 @@
   "transform": [
     {"filter": "datum.IRSD_decile > 0"},
     {
+      "calculate": "toNumber(datum.IRSD_decile)",
+      "as": "decile_num"
+    },
+    {
       "calculate": "datum.library_count > 0 ? 'Has library' : 'No library'",
       "as": "library_status"
     }
@@ -25,7 +29,7 @@
 
   "encoding": {
     "x": {
-      "field": "IRSD_decile",
+      "field": "decile_num",
       "type": "ordinal",
       "title": "IRSD Decile (1 = most disadvantaged)",
       "sort": [1,2,3,4,5,6,7,8,9,10],
@@ -34,7 +38,7 @@
         "labelExpr": "datum.label == '1' || datum.label == '1.0' ? ['1', '(Most disadv.)'] : datum.label == '10' || datum.label == '10.0' ? ['10', '(Least disadv.)'] : datum.label",
         "labelFontSize": 11,
         "labelLimit": 90
-      }   
+      }
     },
     "y": {
       "aggregate": "sum",
@@ -52,9 +56,13 @@
         "range": ["#2a8878", "#b24a2b"]
       },
       "legend": {
-        "orient": "top-right",
+        "orient": "none",
+        "legendX": 145,
+        "legendY": 25,
+        "direction": "vertical",
         "labelFontSize": 12,
-        "titleFontSize": 12
+        "titleFontSize": 12,
+        "symbolSize": 120
       }
     },
     "tooltip": [
@@ -83,10 +91,6 @@
       "labelAngle": 0,
       "labelFontSize": 11,
       "labelLimit": 90
-    },
-    "legend": {
-      "labelFontSize": 11,
-      "titleFontSize": 12
     }
   }
 }
