@@ -28,9 +28,13 @@
       "field": "IRSD_decile",
       "type": "ordinal",
       "title": "IRSD Decile (1 = most disadvantaged)",
+      "sort": [1,2,3,4,5,6,7,8,9,10],
       "axis": {
-        "labelExpr": "datum.label == 1 ? '1 (Most disadv.)' : datum.label == 10 ? '10 (Least disadv.)' : datum.label + ''"
-      }
+        "labelAngle": 0,
+        "labelExpr": "datum.label == '1' || datum.label == '1.0' ? ['1', '(Most disadv.)'] : datum.label == '10' || datum.label == '10.0' ? ['10', '(Least disadv.)'] : datum.label",
+        "labelFontSize": 11,
+        "labelLimit": 90
+      }   
     },
     "y": {
       "aggregate": "sum",
@@ -76,9 +80,9 @@
     "background": "#f7f4ef",
     "view": {"stroke": null},
     "axis": {
+      "labelAngle": 0,
       "labelFontSize": 11,
-      "titleFontSize": 12,
-      "gridColor": "#ddd8cf"
+      "labelLimit": 90
     },
     "legend": {
       "labelFontSize": 11,
