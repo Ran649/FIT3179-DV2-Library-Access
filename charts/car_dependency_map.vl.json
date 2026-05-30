@@ -6,9 +6,9 @@
   "title": {
     "text": "Car Dependency Across Greater Melbourne",
     "subtitle": "Average motor vehicles per household by SA2 area",
-    "anchor": "middle",
+    "anchor": "center",
     "fontSize": 24,
-    "subtitleFontSize": 14
+    "subtitleFontSize": 15
   },
 
   "data": {

@@ -6,9 +6,9 @@
   "title": {
     "text": "Income and Education Levels Across Melbourne SA2 Areas",
     "subtitle": "Each circle is an SA2 area, sized by population; colour shows IRSD disadvantage decile",
-    "anchor": "middle",
+    "anchor": "center",
     "fontSize": 24,
-    "subtitleFontSize": 14
+    "subtitleFontSize": 15
   },
 
   "data": {

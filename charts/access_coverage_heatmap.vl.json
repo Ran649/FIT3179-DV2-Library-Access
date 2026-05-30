@@ -6,9 +6,9 @@
   "title": {
     "text": "Library Access: Disadvantage Meets Car Dependency",
     "subtitle": "Mean libraries per 10,000 residents - Low <1.5 cars, Medium 1.5-2.0, High >2.0",
-    "anchor": "middle",
+    "anchor": "center",
     "fontSize": 22,
-    "subtitleFontSize": 13
+    "subtitleFontSize": 15
   },
 
   "data": {

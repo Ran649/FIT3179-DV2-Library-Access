@@ -5,9 +5,9 @@
   "title": {
     "text": "Socioeconomic Disadvantage and Library Access",
     "subtitle": "Each circle is an SA2 area; access is scaled to reveal near-zero library provision",
-    "anchor": "middle",
+    "anchor": "center",
     "fontSize": 24,
-    "subtitleFontSize": 14
+    "subtitleFontSize": 15
   },
   "data": {
     "url": "../data/processed/master_sa2.csv"

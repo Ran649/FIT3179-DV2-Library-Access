@@ -6,9 +6,9 @@
   "title": {
     "text": "Socioeconomic Disadvantage Across Greater Melbourne",
     "subtitle": "IRSD score by SA2 area - lower scores indicate greater disadvantage",
-    "anchor": "middle",
+    "anchor": "center",
     "fontSize": 24,
-    "subtitleFontSize": 14
+    "subtitleFontSize": 15
   },
 
   "data": {

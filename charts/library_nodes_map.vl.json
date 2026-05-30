@@ -7,9 +7,9 @@
   "title": {
     "text": "Library Service Nodes Across Greater Melbourne",
     "subtitle": "Proportional symbols show SA2 areas with one or more public libraries",
-    "anchor": "middle",
+    "anchor": "center",
     "fontSize": 24,
-    "subtitleFontSize": 14
+    "subtitleFontSize": 15
   },
 
   "projection": {

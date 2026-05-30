@@ -6,9 +6,9 @@
   "title": {
     "text": "Education Outcomes and Library Access by Disadvantage Decile",
     "subtitle": "Box shows bachelor-degree distribution across SA2s; teal circles mark areas that contain a public library",
-    "anchor": "middle",
+    "anchor": "center",
     "fontSize": 22,
-    "subtitleFontSize": 13
+    "subtitleFontSize": 15
   },
 
   "data": {"url": "../data/processed/master_sa2.csv"},
