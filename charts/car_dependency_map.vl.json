@@ -45,7 +45,7 @@
       "type": "quantitative",
       "title": "Avg cars per household",
       "scale": {
-        "range": ["#edf2f8", "#b8cfe8", "#7aaac8", "#3c7aa8", "#1a4c78"],
+        "range": ["#edf4f2","#b9d5cf","#7faeaa","#4f8487","#2c5f68"],
         "domain": [0.5, 2.7],
         "clamp": true
       },
