@@ -1,7 +1,7 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "width": 800,
-  "height": 560,
+  "height": 520,
   "title": {
     "text": "Socioeconomic Disadvantage and Library Access",
     "subtitle": "Each circle is an SA2 area; access is scaled to reveal near-zero library provision",
